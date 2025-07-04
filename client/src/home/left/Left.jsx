@@ -1,0 +1,11 @@
+import { useState } from 'react'
+
+function Left() {
+  return(
+    <>
+        <div>Left</div>
+    </>
+  )
+}
+
+export default Left;
