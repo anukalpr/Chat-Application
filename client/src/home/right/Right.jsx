@@ -1,9 +1,8 @@
-import { useState } from 'react'
 
 function Right() {
   return(
     <>
-        <div>Right</div>
+        <div className="w-[70%]  bg-white text-white"></div>
     </>
   )
 }
