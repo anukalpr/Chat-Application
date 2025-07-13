@@ -1,8 +1,15 @@
+import ChatInput from "./ChatInput";
+import ChatRoom from "./ChatUser";
+import Message from "./Message";
 
 function Right() {
   return(
     <>
-        <div className="w-[70%]  bg-white text-white"></div>
+        <div className="w-[70%]  bg-green-200 text-white">
+            <ChatRoom/>
+            <Message/>
+            <ChatInput/>
+        </div>
     </>
   )
 }
