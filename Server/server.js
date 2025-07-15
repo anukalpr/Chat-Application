@@ -2,6 +2,7 @@ const express=require("express");
 const connection=require("./DataBase/DB");
 const cors=require("cors");
 const contact=require("./controllers/Contact");
+const user=require("./controllers/User");
 const port=3000;
 const app=express();
 
@@ -14,6 +15,7 @@ connection();
 
 //api
 app.use('/api',contact);
+app.use('/api',user);
 
 //Server Health
 app.get('/',(req,res)=>{
