@@ -7,7 +7,7 @@ const router=express.Router();
 router.post('/signup',async(req,res)=>{
     const{userName,email,password,confirmPassword}=req.body;
     if(password!=confirmPassword){
-        res.status(400).json({message:"Missmatch Password"});
+        res.status(400).json({message:"Mismatch Password"});
     }
     try{
         const existingUser=await User.findOne({email});
@@ -15,7 +15,7 @@ router.post('/signup',async(req,res)=>{
             res.status(400).json({message:"User already Exist"});
         }
         const hashedPassword=await bcrypt.hash(password,10);
-        const user= await new User({userName,email,password:hashedPassword,confirmPassword:hashedPassword});
+        const user= await new User({userName,email,password:hashedPassword});
         await user.save();
         generateTokenAndVerify(user._id,res);
         res.status(201).json({message:"Signup Successfully!",User:user})
@@ -29,12 +29,13 @@ router.post('/signin',async(req,res)=>{
     try{
         const user=await User.findOne({email});
         if(!user){
-            res.status(400).json({message:"Invalid user"});
+            return res.status(400).json({message:"Invalid user"});
         }
         const isMatch=await bcrypt.compare(password,user.password);
         if(!isMatch){
-            res.status(400).json({message:"Invalid Password"});
+           return res.status(400).json({message:"Invalid Password"});
         }
+        generateTokenAndVerify(user._id,res);
         res.status(201).json({message:"SignIn Successfull!",user:{
             id:user._id,
             userName:user.userName,
@@ -42,6 +43,14 @@ router.post('/signin',async(req,res)=>{
         }})
     }
     catch(err){
+        res.status(500).json({message:"SigIn Failed",error:err.message});
+    }
+})
+router.post('/signout',async(req,res)=>{
+    try{
+        res.clearCookie("token");
+        res.status(200).json({message:"user logout successfully"});
+    }catch(err){
         res.status(500).json({message:"SigIn Failed",error:err.message});
     }
 })
