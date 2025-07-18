@@ -7,12 +7,12 @@ const router=express.Router();
 router.post('/signup',async(req,res)=>{
     const{userName,email,password,confirmPassword}=req.body;
     if(password!=confirmPassword){
-        res.status(400).json({message:"Mismatch Password"});
+       return res.status(400).json({message:"Mismatch Password"});
     }
     try{
         const existingUser=await User.findOne({email});
         if(existingUser){
-            res.status(400).json({message:"User already Exist"});
+            return res.status(400).json({message:"User already Exist"});
         }
         const hashedPassword=await bcrypt.hash(password,10);
         const user= await new User({userName,email,password:hashedPassword});
@@ -21,7 +21,7 @@ router.post('/signup',async(req,res)=>{
         res.status(201).json({message:"Signup Successfully!",User:user})
     }
     catch(err){
-        res.status(500).json({message:"Register Failed",error:err.message});
+       return res.status(500).json({message:"Register Failed",error:err.message});
     }
 });
 router.post('/signin',async(req,res)=>{

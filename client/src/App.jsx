@@ -1,14 +1,19 @@
 import { useState } from 'react'
-import Left from './Home/Left/left'
-import Right from './Home/Right/right'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   return(
     <>
-      <div className='flex h-screen'>
-        <Left/>
-        <Right/>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/signup' element={<Signup/>}/>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
