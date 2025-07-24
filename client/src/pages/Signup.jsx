@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../context/authContext";
 
 function Signup(){
+    const [authUser,setAuthUser]=useAuth();
     const [userName,setUserName]=useState("");
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
@@ -19,7 +21,9 @@ function Signup(){
                 password,
                 confirmPassword
             })
-            alert("Signup Successfully!",response.data);
+            // alert("Signup Successfully!",response.data);
+            localStorage.setItem("messanger",res.data);
+            setAuthUser(response.data);
             navigate("/login");
         }
         catch(err){
@@ -65,6 +69,7 @@ function Signup(){
                     >
                         Register
                     </button>
+                    <h3>Already have an account <Link className="text-blue-600" to="/login">login</Link></h3>
                 </form>
             </div>
         </div>
