@@ -1,5 +1,6 @@
 const express=require("express");
 const User=require("../models/User");
+const verifyToken=require("../middleware/verifyToken");
 const bcrypt=require("bcrypt");
 const generateTokenAndVerify=require('../JWT/generateToken');
 const router=express.Router();
@@ -52,6 +53,17 @@ router.post('/signout',async(req,res)=>{
         res.status(200).json({message:"user logout successfully"});
     }catch(err){
         res.status(500).json({message:"SigIn Failed",error:err.message});
+    }
+})
+
+router.get('/getUserProfile',verifyToken,async(req,res)=>{
+    try{
+        const loggedInUser=req.user._id;
+        const filteredUsers=await User.find({_id: {$ne: loggedInUser},}).select("-password");
+        res.status(201).json({filteredUsers});
+    }
+    catch(err){
+        res.status(500).json({message:`Server Error due to ${err}`});
     }
 })
 module.exports=router;

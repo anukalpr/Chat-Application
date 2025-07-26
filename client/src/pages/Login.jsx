@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link} from "react-router-dom";
 import { useAuth } from "../context/authContext";
 function Login() {
     const [authUser,setAuthUser]=useAuth();
@@ -65,6 +65,7 @@ function Login() {
                     >
                         Login
                     </button>
+                    <h3>Create new account <Link to="/" className="text-blue-700">signup</Link></h3>
                 </form>
            </div>
         </div>
