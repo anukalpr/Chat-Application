@@ -1,6 +1,6 @@
 const express=require("express");
 const router=express.Router();
-const Contact=require("../models/Contact");
+const Contact=require("../models/Message");
 
 router.post('/add-contact',async(req,res)=>{
    const {Name,Email,Image}=req.body;

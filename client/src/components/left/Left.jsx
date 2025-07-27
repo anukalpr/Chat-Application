@@ -10,7 +10,8 @@ function Left() {
               <Search/>
               <Logout/>
             </div>
-            <newContact/>
+            <hr className="m-[10px]"/>
+            {/* <newContact/> */}
             <Users/>
         </div>
     </>

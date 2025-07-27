@@ -20,9 +20,9 @@ function Signup(){
                 email,
                 password,
                 confirmPassword
-            })
+            },{withCredentials: true})
             // alert("Signup Successfully!",response.data);
-            localStorage.setItem("messanger",response.data);
+            localStorage.setItem("messanger", JSON.stringify(response.data));
             setAuthUser(response.data);
             navigate("/login");
         }

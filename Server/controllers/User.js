@@ -60,7 +60,7 @@ router.get('/getUserProfile',verifyToken,async(req,res)=>{
     try{
         const loggedInUser=req.user._id;
         const filteredUsers=await User.find({_id: {$ne: loggedInUser},}).select("-password");
-        res.status(201).json({filteredUsers});
+        res.status(200).json(filteredUsers);
     }
     catch(err){
         res.status(500).json({message:`Server Error due to ${err}`});

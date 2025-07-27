@@ -17,10 +17,10 @@ function Login() {
     const handleLogin=async(e)=>{
         e.preventDefault();
         try{
-            const response=await axios.post(" http://localhost:3000/api/signin",{
+            const response=await axios.post("http://localhost:3000/api/signin",{
                 email,
                 password
-            });
+            },{withCredentials: true});
             console.log("Login Successfully",response.data);
             localStorage.setItem("messanger",JSON.stringify(response.data));
             setAuthUser(response.data);

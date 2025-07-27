@@ -1,15 +1,21 @@
 const express=require("express");
 const connection=require("./DataBase/DB");
 const cors=require("cors");
-const contact=require("./controllers/Contact");
+const contact=require("./controllers/Message");
 const user=require("./controllers/User");
 const cookieParser=require("cookie-parser");
 const port=3000;
 const app=express();
 
 //Middleware
+app.use(
+    cors({
+      origin: "http://localhost:5173", 
+      credentials: true               
+    })
+  );
+  
 app.use(express.json());
-app.use(cors());
 app.use(cookieParser());
 
 //Database Connection
