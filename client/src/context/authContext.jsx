@@ -1,5 +1,5 @@
 import Cookie from "js-cookie";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
@@ -14,11 +14,12 @@ function AuthProvider({ children }) {
   }
 
   const [authUser, setAuthUser] = useState(initialUserState);
-
+  localStorage.setItem("authUser", JSON.stringify(authUser));
   return (
     <AuthContext.Provider value={[authUser, setAuthUser]}>
       {children}
     </AuthContext.Provider>
+    
   );
 }
 
