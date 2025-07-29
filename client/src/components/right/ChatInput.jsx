@@ -11,10 +11,11 @@ function ChatInput(){
         e.preventDefault();
         setMessage("");
         try{
+            const selectedUser = JSON.parse(localStorage.getItem("selectedUser"));
             const response=await axios.post(`http://localhost:3000/api/send`,{
                 text:message,
                 senderId: authUser.user.id,
-                // receiverId:
+                receiverId:selectedUser._id
             })
         }
         catch(err){
