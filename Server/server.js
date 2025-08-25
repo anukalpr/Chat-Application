@@ -1,36 +1,65 @@
-const express=require("express");
-const connection=require("./DataBase/DB");
-const cors=require("cors");
-const contact=require("./controllers/Message");
-const user=require("./controllers/User");
-const Message=require("./controllers/Message");
-const cookieParser=require("cookie-parser");
-const port=3000;
-const app=express();
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const connection = require("./DataBase/DB");
+const cors = require("cors");
+const contact = require("./controllers/Message");
+const user = require("./controllers/User");
+const cookieParser = require("cookie-parser");
 
-//Middleware
+const port = 3000;
+const app = express();
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: "http://localhost:5173", credentials: true }
+});
+
+app.set("io", io);
+
+const onlineUsers = new Map();
+
+io.on("connection", (socket) => {
+  const { userId } = socket.handshake.query || {};
+  if (userId) {
+    onlineUsers.set(userId, socket.id);
+    io.emit("presence:online", { userId, status: "online" });
+  }
+
+  socket.on("typing", ({ to }) => {
+    const toSocket = onlineUsers.get(to);
+    if (toSocket) io.to(toSocket).emit("typing", { from: userId });
+  });
+
+  socket.on("disconnect", () => {
+    if (userId) {
+      onlineUsers.delete(userId);
+      io.emit("presence:online", { userId, status: "offline" });
+    }
+  });
+});
+
 app.use(
-    cors({
-      origin: "http://localhost:5173", 
-      credentials: true               
-    })
-  );
-  
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
-//Database Connection
+// DB
 connection();
 
-//api
-app.use('/api',contact);
-app.use('/api',user);
-app.use('/api',Message);
+// APIs
+app.use("/api", contact);
+app.use("/api", user);
 
-//Server Health
-app.get('/',(req,res)=>{
-    res.send("Running");
-})
-app.listen(port,()=>{
-    console.log(`The Server is Running on Port: http://localhost${port}`);
-})
+
+// Health
+app.get("/", (req, res) => res.send("Running"));
+
+// Start
+server.listen(port, () => {
+  console.log(`Server at http://localhost:${port}`);
+});

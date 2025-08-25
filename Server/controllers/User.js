@@ -55,7 +55,22 @@ router.post('/signout',async(req,res)=>{
         res.status(500).json({message:"SigIn Failed",error:err.message});
     }
 })
-
+router.get("/searchUsers", async (req, res) => {
+    const { query } = req.query;
+    try {
+        const users = await User.find({
+            $or: [
+              { userName: { $regex: query, $options: "i" } },
+              { email: { $regex: query, $options: "i" } }
+            ]
+          });
+          
+      res.json(users);
+    } catch (err) {
+      res.status(500).json({ message: "Error searching users" });
+    }
+  });
+  
 router.get('/getUserProfile',verifyToken,async(req,res)=>{
     try{
         const loggedInUser=req.user._id;

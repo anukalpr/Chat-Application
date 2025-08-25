@@ -1,5 +1,5 @@
 import ChatInput from "./ChatInput";
-import ChatRoom from "./ChatUser";
+import ChatRoom from "./ChatRoom";
 import Message from "./Message";
 
 function Right() {
