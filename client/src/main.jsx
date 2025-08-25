@@ -4,14 +4,10 @@ import './index.css'
 import App from './App.jsx'
 import AuthProvider from "./context/authContext.jsx"
 import SocketProvider from "./context/socketContext.jsx";
-import NotifProvider from "./context/notificationContext.jsx";
-
 createRoot(document.getElementById('root')).render(
   <AuthProvider>
     <SocketProvider>
-      <NotifProvider>
         <App />
-      </NotifProvider>
     </SocketProvider>
   </AuthProvider>
 );
