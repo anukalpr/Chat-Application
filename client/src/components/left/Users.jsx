@@ -1,5 +1,5 @@
 import getAllUsers from "../../context/getAllusers";
-import UserContext from "../../context/userContext";
+import UserContext from "../../context/UserContext";
 import User from "./User";
 import { useState, useEffect, useContext } from "react";
 
