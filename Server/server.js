@@ -6,9 +6,11 @@ const cors = require("cors");
 const contact = require("./controllers/Message");
 const user = require("./controllers/User");
 const cookieParser = require("cookie-parser");
+const path=require("path");
 
 const port = 3000;
 const app = express();
+const _dirname=path.resolve();
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -45,6 +47,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -57,7 +60,12 @@ app.use("/api", user);
 
 
 // Health
-app.get("/", (req, res) => res.send("Running"));
+// app.get("/", (req, res) => res.send("Running"));
+
+app.use(express.static(path.join(_dirname,"/client/dist")))
+app.get('*',(req,res)=>{
+  res.sendFile(path.resolve(_dirname,"client","dist","index.html"))
+});
 
 // Start
 server.listen(port, () => {
