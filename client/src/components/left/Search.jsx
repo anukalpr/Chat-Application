@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import UserContext from "../../context/userContext";
+import UserContext from "../../context/UserContext";
 import Users from "./Users";
 
 function Search() {
