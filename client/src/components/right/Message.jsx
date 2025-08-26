@@ -64,18 +64,29 @@ function Message() {
   if (loading) return <div className="p-4">Loading messages…</div>;
 
   return (
-    <div className="flex flex-col h-[calc(100vh-160px)] overflow-y-auto p-4 space-y-2">
-      {messages.length === 0 && <p className="text-gray-400">No messages yet. Say hi 👋</p>}
+    <div className="flex flex-col h-[calc(100vh-160px)] overflow-y-auto px-2 sm:px-4 md:px-6 py-3 space-y-2">
+      {messages.length === 0 && (
+        <p className="text-gray-400 text-sm sm:text-base text-center">No messages yet. Say hi 👋</p>
+      )}
+
       {messages.map((m) => {
         const isMe = m.sender === authUser?.user?.id;
         return (
-          <div key={m._id} className={`chat ${isMe ? "chat-end" : "chat-start"}`}>
-            <div className={`chat-bubble ${isMe ? "chat-bubble-primary" : "chat-bubble-secondary"}`}>
+          <div
+            key={m._id}
+            className={`chat ${isMe ? "chat-end" : "chat-start"} w-full`}
+          >
+            <div
+              className={`chat-bubble ${
+                isMe ? "chat-bubble-primary" : "chat-bubble-secondary"
+              } max-w-[85%] sm:max-w-[70%] md:max-w-[60%] text-sm sm:text-base break-words`}
+            >
               {m.text}
             </div>
           </div>
         );
       })}
+
       <div ref={endRef} />
     </div>
   );

@@ -3,76 +3,90 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/authContext";
 
-function Signup(){
-    const [authUser,setAuthUser]=useAuth();
-    const [userName,setUserName]=useState("");
-    const [email,setEmail]=useState("");
-    const [password,setPassword]=useState("");
-    const [confirmPassword,setConfirmPass]=useState("");
+function Signup() {
+  const [authUser, setAuthUser] = useAuth();
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPass] = useState("");
 
-    const navigate=useNavigate();
+  const navigate = useNavigate();
 
-    const handleSignup=async(e)=>{
-        e.preventDefault();
-        try{
-            const response=await axios.post("http://localhost:3000/api/signup",{
-                userName,
-                email,
-                password,
-                confirmPassword
-            },{withCredentials: true})
-            // alert("Signup Successfully!",response.data);
-            localStorage.setItem("messanger", JSON.stringify(response.data));
-            setAuthUser(response.data);
-            navigate("/login");
-        }
-        catch(err){
-            alert("Signup Failed",err.message);
-        }
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/signup",
+        {
+          userName,
+          email,
+          password,
+          confirmPassword,
+        },
+        { withCredentials: true }
+      );
+      localStorage.setItem("messanger", JSON.stringify(response.data));
+      setAuthUser(response.data);
+      navigate("/login");
+    } catch (err) {
+      alert("Signup Failed: " + err.message);
     }
-    return(
-        <div className="bg-white h-screen flex items-center justify-center ">
-            <div className="bg-gray-600 p-[90px] rounded-lg">
-                <h1 className="font-bold text-black text-2xl text-center underline mb-[40px]">Register</h1>
-                <form onSubmit={handleSignup} className="flex flex-col p-[20px] w-[400px] gap-4 rounded-lg">
-                    <input
-                        type="text" 
-                        placeholder="userName"
-                        value={userName}
-                        onChange={(e)=>setUserName(e.target.value)}
-                        className="text-black bg-white px-[10px] py-[5px] focus:outline-none rounded-md"
-                    />
-                    <input
-                        type="email" 
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e)=>setEmail(e.target.value)}
-                        className="text-black bg-white px-[10px] py-[5px] focus:outline-none rounded-md"
-                    />
-                    <input
-                        type="password" 
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e)=>setPassword(e.target.value)}
-                        className="text-black bg-white px-[10px] py-[5px] focus:outline-none rounded-md"
-                    />
-                    <input
-                        type="password" 
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        onChange={(e)=>setConfirmPass(e.target.value)}
-                        className="text-black bg-white px-[10px] py-[5px] focus:outline-none rounded-md"
-                    />
-                    <button 
-                      type="submit"
-                      className="text-black bg-blue-500 hover:bg-blue-700 px-[10px] py-[5px] focus:outline-none rounded-md"
-                    >
-                        Register
-                    </button>
-                    <h3>Already have an account <Link className="text-blue-600" to="/login">login</Link></h3>
-                </form>
-            </div>
-        </div>
-    )
+  };
+
+  return (
+    <div className="bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen flex items-center justify-center px-4">
+      <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-lg">
+        <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
+          Create Account
+        </h1>
+        <form
+          onSubmit={handleSignup}
+          className="flex flex-col gap-4 w-full"
+        >
+          <input
+            type="text"
+            placeholder="Username"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            className="text-gray-900 bg-gray-100 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="text-gray-900 bg-gray-100 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="text-gray-900 bg-gray-100 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPass(e.target.value)}
+            className="text-gray-900 bg-gray-100 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold transition-colors duration-300"
+          >
+            Register
+          </button>
+        </form>
+        <p className="text-gray-600 text-sm text-center mt-6">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-600 hover:underline">
+            Login
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
 }
+
 export default Signup;
