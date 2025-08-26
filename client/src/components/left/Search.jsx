@@ -19,7 +19,7 @@ function Search() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:3000/api/searchUsers?query=${query}`,
+        `https://chatify-apo8.onrender.com/api/searchUsers?query=${query}`,
         { withCredentials: true }
       );
       setResults(response.data);

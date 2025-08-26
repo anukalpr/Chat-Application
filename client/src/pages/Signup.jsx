@@ -16,7 +16,7 @@ function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/signup",
+        "https://chatify-apo8.onrender.com/api/signup",
         {
           userName,
           email,

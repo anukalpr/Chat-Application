@@ -8,7 +8,7 @@ function getAllUsers() {
     const getUsers = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("http://localhost:3000/api/getUserProfile", {
+        const response = await axios.get("https://chatify-apo8.onrender.com/api/getUserProfile", {
           withCredentials: true,
         });
         setAllUsers(Array.isArray(response.data) ? response.data : response.data.users || []);

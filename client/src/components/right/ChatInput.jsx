@@ -18,7 +18,7 @@ function ChatInput() {
 
     try {
       const selectedUser = JSON.parse(localStorage.getItem("selectedUser"));
-      await axios.post(`http://localhost:3000/api/send`, {
+      await axios.post(`https://chatify-apo8.onrender.com/api/send`, {
         text,
         senderId: authUser.user.id,
         receiverId: selectedUser._id,

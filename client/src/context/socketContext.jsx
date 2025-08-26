@@ -13,7 +13,7 @@ export default function SocketProvider({ children }) {
   useEffect(() => {
     if (!authUser?.user?.id) return;
 
-    socketRef.current = io("http://localhost:3000", {
+    socketRef.current = io("https://chatify-apo8.onrender.com", {
       transports: ["websocket"],
       query: { userId: authUser.user.id },
       withCredentials: true,

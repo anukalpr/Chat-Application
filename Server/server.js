@@ -43,7 +43,7 @@ io.on("connection", (socket) => {
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://chatify-apo8.onrender.com",
     credentials: true,
   })
 );
@@ -59,8 +59,6 @@ app.use("/api", contact);
 app.use("/api", user);
 
 
-// Health
-// app.get("/", (req, res) => res.send("Running"));
 
 app.use(express.static(path.join(_dirname,"/client/dist")))
 app.get('*',(req,res)=>{

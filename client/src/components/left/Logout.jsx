@@ -6,7 +6,7 @@ function Logout() {
   const navigate=useNavigate();
     const handleLogout=async()=>{
       try{
-        const response=await axios.post("http://localhost:3000/api/signout");
+        const response=await axios.post("https://chatify-apo8.onrender.com/api/signout");
         localStorage.removeItem("messanger");
         Cookies.remove("jwt");
         navigate("/login");

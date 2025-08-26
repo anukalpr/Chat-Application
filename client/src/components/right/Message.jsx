@@ -26,7 +26,7 @@ function Message() {
     const load = async () => {
       setLoading(true);
       try {
-        const res = await axios.get("http://localhost:3000/api/get-message", {
+        const res = await axios.get("https://chatify-apo8.onrender.com/api/get-message", {
           params: {
             senderId: authUser.user.id,
             receiverId: selectedUser._id,
